@@ -1,73 +1,92 @@
 package games;
 
-import boxes.Box;
+import model.Box;
 import games.service.NewGameBuilder;
 import games.support.AdditionalReward;
+import model.Game;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-public class UserGame extends NewGameBuilder {
+public class UserGame {
 
+private static void chosenBoxIsChance(Box chosenBox, Game userGame){
+     if (chosenBox.getName().equals("Chance")) {
+        System.out.println();
+        System.out.println("Gratulacje ! Trafiłes na pudełko z szansą, kolejne pudełko z Game Over Nie bedzie liczone");
+        userGame.setChances(1);
+    }
+}
 
-    public void userGames(List<Box> boxes) {
-        boolean round = true;
-        int userChoose;
-        int chances = 0;
-        int reward = 0;
+    public void userGames() {
+
+        NewGameBuilder newGameBuilder = new NewGameBuilder();
+        List<Box> boxes = newGameBuilder.createBoxes();
+
+        System.out.println(newGameBuilder.toString(boxes));//Wypisanie listy skrzynek
+        Game userGame = new Game
+                (0,0,0,
+                        null,false,false, boxes);
+
         boolean isUsedSecondChance = false;
-        int additionalChanceOrReward = 0;
+        Box chosenBox;
+        int additionalChanceOrReward;
 
         do {
             System.out.println();
-            System.out.println("Wybierz jedno z pudełek: ");
-            boxesNotInUse(boxes);
-            Box boxChoosed = choosingBox(boxes);
-            if (boxChoosed.getName() == "Chance") {
-                System.out.println();
-                System.out.println("Gratulacje ! Trafiłes na pudełko z szansą, kolejne pudełko z Game Over Nie bedzie liczone");
-                chances++;
-            }
-            if (boxChoosed.isGameOver() && chances == 0) {
+            System.out.println("Wybierz numer: ");
+            showBoxesNotInUse(boxes);//Pokaż skrzynki które nie zostały wybrane
+            chosenBox=chosenBox(boxes);//Wybór skrzynki
+            chosenBoxIsChance(chosenBox,userGame);//Sprawdzenie czy skrzynka jest szansą
+
+
+
+
+
+
+            if (chosenBox.isGameOver() && userGame.getChances() == 0) {
                 System.out.println();
                 Collections.shuffle(boxes);
                 additionalChanceOrReward=randomAdditionalReward(isUsedSecondChance);
                 if(additionalChanceOrReward == 1){
-                   resetChosenBoxes(boxes);
+                   newGameBuilder.resetChosenBoxes(boxes);
                    isUsedSecondChance=true;
                 }else {
-                    reward+=additionalChanceOrReward;
+                    userGame.setReward(userGame.getReward()+additionalChanceOrReward);
                     additionalChanceOrReward = 0;
                 }
-                    if (reward == 0 && additionalChanceOrReward == 0) {
+
+
+
+                    if (userGame.getReward() == 0 && additionalChanceOrReward == 0) {
                         System.out.println();
                         System.out.println("Przykro nam tym razem nie udało Ci się nic wygrać");
-                        round = false;
-                    } else if (reward > 0 && additionalChanceOrReward == 0){
+                        userGame.setEndRound(true);
+                    } else if (userGame.getReward() > 0 && additionalChanceOrReward == 0){
                         System.out.println();
-                        System.out.println("Gra skończona udało Ci się wygrać: " + reward + " $");
-                        round = false;
+                        System.out.println("Gra skończona udało Ci się wygrać: " + userGame.getReward() + " $");
+                        userGame.setEndRound(true);
                     }
 
 
 
-            } else if (boxChoosed.isGameOver() && chances == 1) {
-                chances--;
+            } else if (chosenBox.isGameOver() && userGame.getChances() == 1) {
+                userGame.setChances(0);
                 System.out.println();
                 System.out.println("Wykorzystałeś posiadaną szanse !");
-                boxChoosed.setChosen(true);
+                chosenBox.setChosen(true);
             } else {
-                boxChoosed.setChosen(true);
-                reward += boxChoosed.getReward();
+                chosenBox.setChosen(true);
+                userGame.setReward(userGame.getReward()+chosenBox.getReward());
                 System.out.println();
-                System.out.println("Udało Ci się wygrać do tej pory: " + reward + " $");
+                System.out.println("Udało Ci się wygrać do tej pory: " + userGame.getReward() + " $");
             }
-        } while (round);
+        } while (!userGame.isEndRound());
     }
 
 
-    private static Box choosingBox(List<Box> boxes) {
+    private static Box chosenBox(List<Box> boxes) {
         Scanner scanner = new Scanner(System.in);
         int userChooseCard = 0;
         boolean error = true;
@@ -77,7 +96,7 @@ public class UserGame extends NewGameBuilder {
                 if (boxes.get(userChooseCard).isChosen()) {
                     do {
                         System.out.println("Ta skrzynka została już wybrana, pozostałe skrzynki do wyboru to: ");
-                        boxesNotInUse(boxes);
+                        showBoxesNotInUse(boxes);
                         System.out.println();
                         System.out.println("Podaj jeden z powyższych numerów: ");
                         userChooseCard = scanner.nextInt() - 1;
@@ -96,7 +115,7 @@ public class UserGame extends NewGameBuilder {
         return boxes.get(userChooseCard);
     }
 
-    private static void boxesNotInUse(List<Box> boxes) {
+    private static void showBoxesNotInUse(List<Box> boxes) {
         for (Box box : boxes) {
             if (!box.isChosen()) {
                 System.out.print(boxes.indexOf(box) + 1 + " ");

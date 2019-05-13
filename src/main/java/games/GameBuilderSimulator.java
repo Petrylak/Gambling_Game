@@ -1,6 +1,6 @@
 package games;
 
-import boxes.Box;
+import model.Box;
 import games.service.NewGameBuilder;
 import games.support.AdditionalReward;
 
@@ -9,7 +9,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class GameBuilderSimulator extends NewGameBuilder {
+public class GameBuilderSimulator {
+
+    private int doYouChoseChance(List<Box> boxesNotInUse, int randomSelection) {
+        if (boxesNotInUse.get(randomSelection).getName().equals("Chance")) {
+            return 1;
+        } else return 0;
+    }
 
     public List<Integer> symulationGames(List<Box> boxes) {
         int chances = 0;
@@ -17,26 +23,25 @@ public class GameBuilderSimulator extends NewGameBuilder {
         boolean round;
         boolean isUsedSecondChance;
         int additionalChanceOrReward = 0;
+        NewGameBuilder newGameBuilder = new NewGameBuilder();
         List<Integer> wyniki = new ArrayList<>();
         Random random = new Random();
         for (int i = 0; i < GameConfiguration.NUMBER_OF_SIMULATIONS; i++) {
             reward = 0;
             round = true;
-            resetChosenBoxes(boxes);
+            newGameBuilder.resetChosenBoxes(boxes);
             Collections.shuffle(boxes);
             isUsedSecondChance = false;
             do {
                 List<Box> boxesNotInUse = new ArrayList<>(getBoxesNotInUse(boxes));
                 int randomSelection = random.nextInt(boxesNotInUse.size());// Wybierz jedną z pozostałych
                 boxesNotInUse.get(randomSelection);
-                if (boxesNotInUse.get(randomSelection).getName().equals("Chance")) {
-                    chances++;
-                }
+                chances+=doYouChoseChance(boxesNotInUse,randomSelection);
                 if (boxesNotInUse.get(randomSelection).isGameOver() && chances == 0) {
                     additionalChanceOrReward = randomAdditionalReward(isUsedSecondChance);
 
                     if (additionalChanceOrReward == 1) {
-                        resetChosenBoxes(boxes);
+                        newGameBuilder.resetChosenBoxes(boxes);
                         isUsedSecondChance = true;
                     } else {
                         reward += additionalChanceOrReward;

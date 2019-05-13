@@ -1,17 +1,21 @@
 package games.service;
 
-import boxes.Box;
+import model.Box;
 import games.GameConfiguration;
+import model.Game;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class NewGameBuilder {
+public class NewGameBuilder  {
+
 
     public List<Box> createBoxes() {
 
+
         List<Box> yourCreatedBoxes = new ArrayList<Box>();
+
 
         for (int i = 0; i < GameConfiguration.NUMBER_OF_100EURO_BOXES; i++) {
             yourCreatedBoxes.add(new Box("100", 100));
@@ -26,7 +30,7 @@ public class NewGameBuilder {
             yourCreatedBoxes.add(new Box("Game Over", true));
         }
         for (int i = 0; i < GameConfiguration.NUMBER_OF_CHANCE_BOXES; i++) {
-            yourCreatedBoxes.add(new Box("Chance", true));
+            yourCreatedBoxes.add(new Box("Chance", false));
         }
 
         Collections.shuffle(yourCreatedBoxes);
@@ -40,12 +44,12 @@ public class NewGameBuilder {
         }
     }
 
-    @Override
-    public String toString() {
+
+    public String toString(List<Box> createdBoxes) {
 
         int cardNumber = 1;
         String makingBoxesLog = null;
-        for (Box i : createBoxes()) {
+        for (Box i : createdBoxes) {
             makingBoxesLog += ("\nPudełko nr." + (cardNumber++) + " : " + i.getName());
         }
         return("Pomieszane pudełka: " + makingBoxesLog);

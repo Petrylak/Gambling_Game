@@ -1,8 +1,9 @@
-import boxes.Box;
+import model.Box;
 import games.GameConfiguration;
 import games.GameBuilderSimulator;
 import games.UserGame;
 import games.service.NewGameBuilder;
+import model.Game;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -16,10 +17,14 @@ public class Main {
         boolean game = true;
 
         UserGame userGame = new UserGame();
+
+        GameBuilderSimulator gameBuilderSimulator = new GameBuilderSimulator();
         NewGameBuilder newGameBuilder = new NewGameBuilder();
         List<Box> boxes = newGameBuilder.createBoxes();
-        System.out.println(newGameBuilder.toString());
-        GameBuilderSimulator gameBuilderSimulator = new GameBuilderSimulator();
+
+
+
+
         do {
             Scanner scanner = new Scanner(System.in);
             try {
@@ -32,15 +37,14 @@ public class Main {
 
                 switch (userChoose) {
                     case 1: {
-                        userGame.userGames(boxes);
-                        newGameBuilder.resetChosenBoxes(boxes);
+                        userGame.userGames();
                         break;
                     }
                     case 2: {
                         int sum = 0;
                         int avarageReward;
                         List<Integer> boxesFromSimulation = new ArrayList<>
-                                (gameBuilderSimulator.symulationGames(boxes));
+                                (gameBuilderSimulator.symulationGames(boxes));// do zmiany boxes
 
                         System.out.println(boxesFromSimulation);
 
