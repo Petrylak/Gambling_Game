@@ -2,6 +2,9 @@ package model;
 
 import lombok.Getter;
 import lombok.Setter;
+import support.AdditionalRewardCode;
+
+import java.util.Properties;
 
 @Getter
 @Setter
@@ -35,9 +38,5 @@ public abstract class Box {
 
     }
 
-     public void action(){}
-
-    public void action(Game game){}
-
-    public Game action(Game game) {}
+    public Game action(Game game, Properties properties, AdditionalRewardCode additionalRewardCode) {return game;}
 }

@@ -1,6 +1,6 @@
 import model.Box;
 import service.NewGameBuilder;
-import support.AdditionalReward;
+import support.support.AdditionalRewardCode;
 import model.Game;
 
 import java.util.Collections;
@@ -123,29 +123,29 @@ public class UserGame {
     }
 
     private static int randomAdditionalReward(boolean isUsedSecondChance, Properties properties) {
-        AdditionalReward additionalReward;
+        support.AdditionalRewardCode additionalReward;
 
         if(isUsedSecondChance){
             System.out.println(properties.getProperty("TEXT_WARNING_USEDSECCONDCHANCE"));
-            System.out.println(AdditionalReward.SMALL.getDescription() + " / " +
-                    AdditionalReward.MEDIUM.getDescription() + " / " +
-                    AdditionalReward.LARGE.getDescription());
+            System.out.println(support.AdditionalRewardCode.SMALL.getDescription() + " / " +
+                    support.AdditionalRewardCode.MEDIUM.getDescription() + " / " +
+                    support.AdditionalRewardCode.LARGE.getDescription());
             System.out.println(properties.getProperty("TEXT_GAME_YOUGOT"));
-            additionalReward = AdditionalReward.randomRewardWithoutChance();
+            additionalReward = support.AdditionalRewardCode.randomRewardWithoutChance();
             System.out.println(additionalReward.getDescription());
             return additionalReward.getReward();
         }else {
             System.out.println(properties.getProperty("TEXT_GAME_ADDITIONALREWARDCHANCE"));
-            System.out.println(AdditionalReward.SMALL.getDescription() + " / " +
-                    AdditionalReward.MEDIUM.getDescription() + " / " +
-                    AdditionalReward.LARGE.getDescription() + " / " +
-                    AdditionalReward.CHANCE.getDescription());
+            System.out.println(support.AdditionalRewardCode.SMALL.getDescription() + " / " +
+                    support.AdditionalRewardCode.MEDIUM.getDescription() + " / " +
+                    support.AdditionalRewardCode.LARGE.getDescription() + " / " +
+                    support.AdditionalRewardCode.CHANCE.getDescription());
             System.out.println(properties.getProperty("TEXT_GAME_YOUGOT"));
-            additionalReward = AdditionalReward.randomReward();
+            additionalReward = support.AdditionalRewardCode.randomReward();
             System.out.println(additionalReward.getDescription());
-            if ((additionalReward == AdditionalReward.SMALL) ||
-                    (additionalReward == AdditionalReward.MEDIUM) ||
-                    (additionalReward == AdditionalReward.LARGE)) {
+            if ((additionalReward == support.AdditionalRewardCode.SMALL) ||
+                    (additionalReward == support.AdditionalRewardCode.MEDIUM) ||
+                    (additionalReward == support.AdditionalRewardCode.LARGE)) {
                 return additionalReward.getReward();
             } else return 1;
         }
