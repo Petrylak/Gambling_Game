@@ -1,13 +1,8 @@
-package games;
-
 import model.Box;
-import games.service.NewGameBuilder;
-import games.support.AdditionalReward;
+import service.NewGameBuilder;
+import support.AdditionalReward;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class GameBuilderSimulator {
 
@@ -17,7 +12,7 @@ public class GameBuilderSimulator {
         } else return 0;
     }
 
-    public List<Integer> symulationGames(List<Box> boxes) {
+    public List<Integer> symulationGames(List<Box> boxes, Properties properties) {
         int chances = 0;
         int reward;
         boolean round;
@@ -26,7 +21,7 @@ public class GameBuilderSimulator {
         NewGameBuilder newGameBuilder = new NewGameBuilder();
         List<Integer> wyniki = new ArrayList<>();
         Random random = new Random();
-        for (int i = 0; i < GameConfiguration.NUMBER_OF_SIMULATIONS; i++) {
+        for (int i = 0; i < Integer.parseInt(properties.getProperty("NUMBER_OF_100EURO_BOXES")); i++) {
             reward = 0;
             round = true;
             newGameBuilder.resetChosenBoxes(boxes);
