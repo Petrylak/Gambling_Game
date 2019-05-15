@@ -3,6 +3,7 @@ import service.NewGameBuilder;
 
 import java.util.*;
 
+
 public class Main {
 
     public static void main(String[] args) {
@@ -15,7 +16,6 @@ public class Main {
         IOProperties ioProperties = new IOProperties();
         Properties properties = ioProperties.getPropertiesFromFile();
 
-        List<Box> boxes = newGameBuilder.createBoxes2(properties);
 
 
 
@@ -38,8 +38,9 @@ public class Main {
                     case 2: {
                         int sum = 0;
                         int avarageReward;
+                        List<Box> boxes = newGameBuilder.createBoxes2(properties);// testowo
                         List<Integer> boxesFromSimulation = new ArrayList<>
-                                (gameBuilderSimulator.symulationGames(boxes, properties));// do zmiany boxes
+                                (gameBuilderSimulator.symulationGamesWork(boxes));// do zmiany boxes
 
                         System.out.println(boxesFromSimulation);
 
@@ -47,7 +48,9 @@ public class Main {
                         for (int i = 0; i < boxesFromSimulation.size(); i++) {
                             sum += boxesFromSimulation.get(i);
                         }
-                        avarageReward = sum / Integer.parseInt(properties.getProperty("NUMBER_OF_SIMULATIONS"));
+                        //avarageReward = sum / Integer.parseInt(properties.getProperty("NUMBER_OF_SIMULATIONS"));
+
+                        avarageReward = sum / 100000;
 
                         System.out.println(properties.getProperty("TEXT_SUM_REWARDS")
                                 + Integer.parseInt(properties.getProperty("NUMBER_OF_SIMULATIONS"))
@@ -60,7 +63,7 @@ public class Main {
                                 + properties.getProperty("TEXT_AVERAGE_WINS2")
                                 + avarageReward
                                 + properties.getProperty("CURRENCY"));
-
+                        break;
                     }
                     case 3: {
                         game = false;

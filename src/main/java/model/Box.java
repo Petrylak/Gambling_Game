@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import support.AdditionalRewardCode;
 
+import java.util.List;
 import java.util.Properties;
 
 @Getter
@@ -38,5 +39,7 @@ public abstract class Box {
 
     }
 
-    public Game action(Game game, Properties properties, AdditionalRewardCode additionalRewardCode) {return game;}
+    public void actionUserGame(Game game, Properties properties, AdditionalRewardCode additionalRewardCode) {}
+    public void actionSimulationGame(Game game, List<Integer> rewardsList) {}
+
 }

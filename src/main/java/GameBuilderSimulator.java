@@ -1,52 +1,38 @@
 import model.Box;
+import model.Game;
 import service.NewGameBuilder;
-import support.AdditionalReward;
+import support.AdditionalRewardCode;
+import support.BoxOperations;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class GameBuilderSimulator {
 
-    private int doYouChoseChance(List<Box> boxesNotInUse, int randomSelection) {
-        if (boxesNotInUse.get(randomSelection).getName().equals("Chance")) {
-            return 1;
-        } else return 0;
-    }
 
-    public List<Integer> symulationGames(List<Box> boxes, Properties properties) {
+    public List<Integer> symulationGamesWork(List<Box> boxes) {
         int chances = 0;
-        int reward;
-        boolean round;
-        boolean isUsedSecondChance;
-        int additionalChanceOrReward = 0;
-        NewGameBuilder newGameBuilder = new NewGameBuilder();
-        List<Integer> wyniki = new ArrayList<>();
+        int reward = 0;
+        boolean round = true;
+        List<Integer> wyniki = new ArrayList<Integer>();
         Random random = new Random();
-        for (int i = 0; i < Integer.parseInt(properties.getProperty("NUMBER_OF_100EURO_BOXES")); i++) {
+        for (int i = 0; i < 100000; i++) {
             reward = 0;
             round = true;
-            newGameBuilder.resetChosenBoxes(boxes);
+            BoxOperations boxOperations = new BoxOperations();
+            NewGameBuilder boxReset = new NewGameBuilder();
+            boxReset.resetChosenBoxes(boxes);
             Collections.shuffle(boxes);
-            isUsedSecondChance = false;
             do {
-                List<Box> boxesNotInUse = new ArrayList<>(getBoxesNotInUse(boxes));
+                List<Box> boxesNotInUse = new ArrayList<Box>(getBoxesNotInUse(boxes));
                 int randomSelection = random.nextInt(boxesNotInUse.size());// Wybierz jedną z pozostałych
                 boxesNotInUse.get(randomSelection);
-                chances+=doYouChoseChance(boxesNotInUse,randomSelection);
+                if (boxesNotInUse.get(randomSelection).getName().equals("Chance")) {
+                    chances++;
+                }
                 if (boxesNotInUse.get(randomSelection).isGameOver() && chances == 0) {
-                    additionalChanceOrReward = randomAdditionalReward(isUsedSecondChance);
-
-                    if (additionalChanceOrReward == 1) {
-                        newGameBuilder.resetChosenBoxes(boxes);
-                        isUsedSecondChance = true;
-                    } else {
-                        reward += additionalChanceOrReward;
-                        additionalChanceOrReward = 0;
-                        wyniki.add(reward);
-                        round = false;
-
-                    }
-
-
+                    wyniki.add(reward);
+                    round = false;
                 } else if (boxesNotInUse.get(randomSelection).isGameOver() && chances == 1) {
                     chances--;
                     boxesNotInUse.get(randomSelection).setChosen(true);
@@ -59,30 +45,40 @@ public class GameBuilderSimulator {
         return wyniki;
     }
 
-    //Tworzy liste pozostałych skrzynek na której działa symulacja
-    private static List<Box> getBoxesNotInUse(List<Box> boxes) {
-        List<Box> boxesNotInUse = new ArrayList<Box>();
+
+    public List<Integer> symulationGamesNotWork(Properties properties) {
+
+        List<Integer> rewardsList = new ArrayList<>();
+
+
+        //userGame.setRewardsList(new ArrayList<>());
+
+        for (int i = 0; i < Integer.parseInt(properties.getProperty("NUMBER_OF_SIMULATIONS")); i++) {
+
+            NewGameBuilder newGameBuilder = new NewGameBuilder();
+            BoxOperations boxOperations = new BoxOperations();
+            List<Box> boxes = newGameBuilder.createBoxes2(properties);
+
+            Game userGame = new Game
+                    (0, 0, 0,
+                            null, false, false, boxes, 0, true);
+
+
+
+            do {
+                boxOperations.choosingBoxSimulation(userGame).actionSimulationGame(userGame,rewardsList);
+            } while (!userGame.isEndRound());
+        }
+        return rewardsList;
+    }
+
+    private static List<Box> getBoxesNotInUse(List<Box> boxes) {// testowo
+        List<Box> boxesNotInUse = new ArrayList<>();
         for (Box box : boxes) {
             if (!box.isChosen()) {
                 boxesNotInUse.add(box);
             }
         }
         return boxesNotInUse;
-    }
-
-    private static int randomAdditionalReward(boolean isUsedSecondChance) {
-        AdditionalReward additionalReward;
-
-        if (isUsedSecondChance) {//bez chance
-            additionalReward = AdditionalReward.randomRewardWithoutChance();
-            return additionalReward.getReward();
-        } else {//wszystkie z chance
-            additionalReward = AdditionalReward.randomReward();
-            if ((additionalReward == AdditionalReward.SMALL) ||
-                    (additionalReward == AdditionalReward.MEDIUM) ||
-                    (additionalReward == AdditionalReward.LARGE)) {
-                return additionalReward.getReward();
-            } else return 1;
-        }
     }
 }

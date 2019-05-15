@@ -38,4 +38,20 @@ public class AdditionalRewardCode {
             }
         }
     }
+
+    public int randomAdditionalRewardSimulation(Game game) {
+        AdditionalReward additionalReward;
+
+        if (game.isUsedSecondChance()) {//bez chance
+            additionalReward = AdditionalReward.randomRewardWithoutChance();
+            return additionalReward.getReward();
+        } else {//wszystkie z chance
+            additionalReward = AdditionalReward.randomReward();
+            if ((additionalReward == AdditionalReward.SMALL) ||
+                    (additionalReward == AdditionalReward.MEDIUM) ||
+                    (additionalReward == AdditionalReward.LARGE)) {
+                return additionalReward.getReward();
+            } else return 1;
+        }
+    }
 }

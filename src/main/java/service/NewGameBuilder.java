@@ -40,9 +40,7 @@ public class NewGameBuilder  {
     }
 
     public void resetChosenBoxes(List<Box> boxes) {
-        for (int i = 0; i < boxes.size(); i++) {
-            boxes.get(i).setChosen(false);
-        }
+        boxes.forEach(box->box.setChosen(false));
     }
 
 
