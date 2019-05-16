@@ -1,4 +1,4 @@
-# Gambling
+# GamblingGame
 
 An application / game created to simulate the expected result.
 
