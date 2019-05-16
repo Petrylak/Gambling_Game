@@ -35,7 +35,7 @@ public class Main {
                         int sum = 0;
                         int avarageReward;
                         List<Integer> boxesFromSimulation = new ArrayList<>
-                                (gameBuilderSimulator.symulationGames2(properties));
+                                (gameBuilderSimulator.simulationGames(properties));
 
                         System.out.println(boxesFromSimulation);
 

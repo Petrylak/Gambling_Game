@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class GameBuilderSimulator {
 
-    public List<Integer> symulationGames2(Properties properties) {
+    public List<Integer> simulationGames(Properties properties) {
 
 
         System.out.println("Ładowanie symulacji...");
