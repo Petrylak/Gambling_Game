@@ -26,7 +26,7 @@ public class UserGame {
             System.out.println();
             System.out.println(properties.getProperty("TEXT_SELECT_NUMBER"));
             boxOperations.showBoxesNotInUse(userGame.getCreatedBoxes());
-            boxOperations.choosingBox(properties, userGame).actionUserGame(userGame, properties, additionalReward);
+            boxOperations.choosingBox(properties, userGame).action(userGame, properties, additionalReward);
         } while (!userGame.isEndRound());
     }
 }

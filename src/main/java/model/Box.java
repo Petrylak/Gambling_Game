@@ -2,6 +2,7 @@ package model;
 
 import lombok.Getter;
 import lombok.Setter;
+import service.NewGameBuilder;
 import support.AdditionalRewardCode;
 
 import java.util.List;
@@ -14,12 +15,6 @@ public abstract class Box {
     private int reward;
     private boolean gameOver;
     private boolean chosen;
-
-
-
-    public Box(String name) {
-        this.name = name;
-    }
 
     public Box(String name, int reward) {
         this.name = name;
@@ -39,7 +34,9 @@ public abstract class Box {
 
     }
 
-    public void actionUserGame(Game game, Properties properties, AdditionalRewardCode additionalRewardCode) {}
-    public void actionSimulationGame(Game game, List<Integer> rewardsList) {}
+    public void action(Game game, Properties properties, AdditionalRewardCode additionalRewardCode) {
+    }
 
+    public void action2(Game game, NewGameBuilder newGameBuilder, List<Integer> listOfRewards) {
+    }
 }

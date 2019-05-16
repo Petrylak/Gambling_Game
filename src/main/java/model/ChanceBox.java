@@ -1,5 +1,6 @@
 package model;
 
+import service.NewGameBuilder;
 import support.AdditionalRewardCode;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class ChanceBox extends Box {
 
 
     @Override
-    public void actionUserGame(Game game, Properties properties, AdditionalRewardCode additionalRewardCode){
+    public void action(Game game, Properties properties, AdditionalRewardCode additionalRewardCode) {
         System.out.println();
         System.out.println("Gratulacje ! Trafiłes na pudełko z szansą, kolejne pudełko z Game Over Nie bedzie liczone");
         game.setChances(1);
@@ -22,10 +23,7 @@ public class ChanceBox extends Box {
     }
 
     @Override
-    public void actionSimulationGame(Game game, List<Integer> rewardsList){
-        game.setChances(1);
-        game.getChosenBox().setChosen(true);
+    public void action2(Game userGame, NewGameBuilder newGameBuilder, List<Integer> listOfRewards) {
+        userGame.setChances(1);
     }
-
-
 }

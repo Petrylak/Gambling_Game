@@ -1,79 +1,52 @@
 import model.Box;
 import model.Game;
 import service.NewGameBuilder;
-import support.AdditionalRewardCode;
-import support.BoxOperations;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+import java.util.Random;
 
 public class GameBuilderSimulator {
 
+    public List<Integer> symulationGames2(Properties properties) {
 
-    public List<Integer> symulationGamesWork(List<Box> boxes) {
-        int chances = 0;
-        int reward = 0;
-        boolean round = true;
-        List<Integer> wyniki = new ArrayList<Integer>();
-        Random random = new Random();
-        for (int i = 0; i < 100000; i++) {
-            reward = 0;
-            round = true;
-            BoxOperations boxOperations = new BoxOperations();
-            NewGameBuilder boxReset = new NewGameBuilder();
-            boxReset.resetChosenBoxes(boxes);
-            Collections.shuffle(boxes);
+
+        System.out.println("Ładowanie symulacji...");
+
+        List<Integer> wyniki = new ArrayList<>();
+        for (int i = 0; i < Integer.parseInt(properties.getProperty("NUMBER_OF_SIMULATIONS")); i++) {
+            NewGameBuilder newGameBuilder = new NewGameBuilder();
+            List<Box> list = newGameBuilder.createBoxes2(properties);
+            Game userGame = new Game
+
+                    (0, 0, 0,
+                            null, false, false, list);
+
             do {
-                List<Box> boxesNotInUse = new ArrayList<Box>(getBoxesNotInUse(boxes));
-                int randomSelection = random.nextInt(boxesNotInUse.size());// Wybierz jedną z pozostałych
-                boxesNotInUse.get(randomSelection);
-                if (boxesNotInUse.get(randomSelection).getName().equals("Chance")) {
-                    chances++;
-                }
-                if (boxesNotInUse.get(randomSelection).isGameOver() && chances == 0) {
-                    wyniki.add(reward);
-                    round = false;
-                } else if (boxesNotInUse.get(randomSelection).isGameOver() && chances == 1) {
-                    chances--;
-                    boxesNotInUse.get(randomSelection).setChosen(true);
-                } else {
-                    boxesNotInUse.get(randomSelection).setChosen(true);
-                    reward += boxesNotInUse.get(randomSelection).getReward();
-                }
-            } while (round);
+
+                List<Box> boxesNotInUse = new ArrayList<>(getBoxesNotInUse(userGame.getCreatedBoxes()));
+                simulationChosingBox(boxesNotInUse, userGame);
+
+                userGame.getChosenBox().action2(userGame, newGameBuilder, wyniki);
+
+
+            } while (!userGame.isEndRound());
+
         }
         return wyniki;
     }
 
-
-    public List<Integer> symulationGamesNotWork(Properties properties) {
-
-        List<Integer> rewardsList = new ArrayList<>();
-
-
-        //userGame.setRewardsList(new ArrayList<>());
-
-        for (int i = 0; i < Integer.parseInt(properties.getProperty("NUMBER_OF_SIMULATIONS")); i++) {
-
-            NewGameBuilder newGameBuilder = new NewGameBuilder();
-            BoxOperations boxOperations = new BoxOperations();
-            List<Box> boxes = newGameBuilder.createBoxes2(properties);
-
-            Game userGame = new Game
-                    (0, 0, 0,
-                            null, false, false, boxes, 0, true);
-
-
-
-            do {
-                boxOperations.choosingBoxSimulation(userGame).actionSimulationGame(userGame,rewardsList);
-            } while (!userGame.isEndRound());
-        }
-        return rewardsList;
+    public static void simulationChosingBox(List<Box> boxesNotInUse, Game game) {
+        Random random = new Random();
+        game.setSimulationNumber(random.nextInt(boxesNotInUse.size()));
+        game.setChosenBox(boxesNotInUse.get(game.getSimulationNumber()));
+        boxesNotInUse.get(game.getSimulationNumber()).setChosen(true);
     }
 
-    private static List<Box> getBoxesNotInUse(List<Box> boxes) {// testowo
-        List<Box> boxesNotInUse = new ArrayList<>();
+    //Tworzy liste pozostałych skrzynek na której działa symulacja
+    private static List<Box> getBoxesNotInUse(List<Box> boxes) {
+        List<Box> boxesNotInUse = new ArrayList<Box>();
         for (Box box : boxes) {
             if (!box.isChosen()) {
                 boxesNotInUse.add(box);
