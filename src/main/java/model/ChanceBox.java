@@ -23,7 +23,7 @@ public class ChanceBox extends Box {
     }
 
     @Override
-    public void actionSimulation(Game game, NewGameBuilder newGameBuilder){
+    public void actionSimulation(Game game, NewGameBuilder newGameBuilder, List<Long> balance){
         setProperties(game);
     }
 

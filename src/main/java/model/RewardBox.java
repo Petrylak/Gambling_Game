@@ -26,7 +26,7 @@ public class RewardBox extends Box {
                 + properties.getProperty("CURRENCY"));
     }
     @Override
-    public void actionSimulation(Game userGame, NewGameBuilder newGameBuilder) {
+    public void actionSimulation(Game userGame, NewGameBuilder newGameBuilder, List<Long> balance) {
 
         userGame.setReward(userGame.getReward() + reward);
     }

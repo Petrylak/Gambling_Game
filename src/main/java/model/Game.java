@@ -8,7 +8,7 @@ import java.util.List;
 @Setter
 @Getter
 public class Game {
-    private int reward;
+    private Long reward;
     private int chances;
     private int additionalChanceOrReward;
     private int userNumber;
@@ -24,7 +24,7 @@ public class Game {
 
     }
 
-    public Game(int reward, int chances, int additionalChanceOrReward, Box chosenBox,
+    public Game(long reward, int chances, int additionalChanceOrReward, Box chosenBox,
                 boolean endRound, boolean usedSecondChance, List<Box> createdBoxes) {
 
         this.reward = reward;

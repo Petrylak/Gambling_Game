@@ -48,18 +48,13 @@ public class Main {
     }
 
     private static void newSimulation(GameBuilderSimulator gameBuilderSimulator, Properties properties){
-        int sum = 0;
-        int averageReward;
-       // List<Integer> boxesFromSimulation =
-        long boxesFromSimulation = (gameBuilderSimulator.simulationGames(properties));
+        List<Long> balance = gameBuilderSimulator.simulationGames(properties);
+        long sum=0;
+        for (int i = 0; i < balance.size(); i++) {
+            sum += balance.get(i);
+        }
 
-        System.out.println(boxesFromSimulation);
-
-
-       //for (int i = 0; i < boxesFromSimulation.size(); i++) {
-       //     sum += boxesFromSimulation.get(i);
-       // }
-        averageReward = sum / Integer.parseInt(properties.getProperty("NUMBER_OF_SIMULATIONS"));
+        long averageReward = sum / Long.parseLong(properties.getProperty("NUMBER_OF_SIMULATIONS"));
 
 
         System.out.println(properties.getProperty("TEXT_SUM_REWARDS")

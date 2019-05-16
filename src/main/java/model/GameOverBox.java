@@ -49,7 +49,7 @@ public class GameOverBox extends Box {
         }
     }
     @Override
-    public void actionSimulation(Game userGame, NewGameBuilder newGameBuilder) {
+    public void actionSimulation(Game userGame, NewGameBuilder newGameBuilder, List<Long> balance) {
 
         if (userGame.getChances() == 0) {
             userGame.setAdditionalChanceOrReward(randomAdditionalReward(userGame.isUsedSecondChance()));
@@ -59,6 +59,7 @@ public class GameOverBox extends Box {
                 userGame.setUsedSecondChance(true);
             } else {
                 userGame.setReward(userGame.getAdditionalChanceOrReward() + userGame.getReward());
+                balance.add(userGame.getReward());
             //    userGame.setBalance(userGame.getBalance() + userGame.getReward());
                 userGame.setEndRound(true);
 
