@@ -3,27 +3,34 @@ package model;
 import service.NewGameBuilder;
 import support.AdditionalRewardCode;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Properties;
 
 public class ChanceBox extends Box {
 
+    private boolean chance;
 
     public ChanceBox(String name, boolean chance) {
-        super(name, chance);
+        super(name);
+        this.chance = chance;
+
     }
 
 
     @Override
-    public void action(Game game, Properties properties, AdditionalRewardCode additionalRewardCode) {
+    public void actionUserGame(Game game, Properties properties, AdditionalRewardCode additionalRewardCode){
         System.out.println();
-        System.out.println("Gratulacje ! Trafiłes na pudełko z szansą, kolejne pudełko z Game Over Nie bedzie liczone");
+        System.out.println(properties.getProperty("TEXT_CONGRATULATIONS_BOXCHANCE"));
         game.setChances(1);
         game.getChosenBox().setChosen(true);
     }
 
     @Override
-    public void action2(Game userGame, NewGameBuilder newGameBuilder, List<Integer> listOfRewards) {
-        userGame.setChances(1);
+    public void actionSimulation(Game game, NewGameBuilder newGameBuilder, BigInteger balance){
+        game.setChances(1);
+        game.getChosenBox().setChosen(true);
     }
+
+
 }

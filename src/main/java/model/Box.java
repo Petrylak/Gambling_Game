@@ -5,6 +5,7 @@ import lombok.Setter;
 import service.NewGameBuilder;
 import support.AdditionalRewardCode;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Properties;
 
@@ -12,31 +13,14 @@ import java.util.Properties;
 @Setter
 public abstract class Box {
     private String name;
-    private int reward;
-    private boolean gameOver;
-    private boolean chosen;
+    private boolean isChosen;
 
-    public Box(String name, int reward) {
+    public Box(String name) {
         this.name = name;
-        this.reward = reward;
-
     }
 
-    public Box(String name, boolean gameOver) {
-        this.name = name;
-        this.gameOver = gameOver;
 
-    }
+    abstract public void actionUserGame(Game game, Properties properties, AdditionalRewardCode additionalRewardCode);
 
-    public Box(String name, boolean chance, boolean gameOver) {
-        this.name = name;
-        this.gameOver = gameOver;
-
-    }
-
-    public void action(Game game, Properties properties, AdditionalRewardCode additionalRewardCode) {
-    }
-
-    public void action2(Game game, NewGameBuilder newGameBuilder, List<Integer> listOfRewards) {
-    }
+    abstract public void actionSimulation(Game game, NewGameBuilder newGameBuilder, BigInteger balance);
 }

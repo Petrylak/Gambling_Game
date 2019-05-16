@@ -4,18 +4,22 @@ import service.NewGameBuilder;
 import support.AdditionalReward;
 import support.AdditionalRewardCode;
 
+import java.math.BigInteger;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-public class GameoverBox extends Box {
+public class GameOverBox extends Box {
 
-    public GameoverBox(String name, boolean gameOver) {
-        super(name, gameOver);
+    private boolean gameOver;
+
+    public GameOverBox(String name, boolean gameOver) {
+        super(name);
+        this.gameOver = gameOver;
     }
 
     @Override
-    public void action(Game game, Properties properties, AdditionalRewardCode additionalRewardCode) {
+    public void actionUserGame(Game game, Properties properties, AdditionalRewardCode additionalRewardCode) {
         if (game.getChances() == 1) {
             game.setChances(0);
             game.getChosenBox().setChosen(true);
@@ -48,9 +52,9 @@ public class GameoverBox extends Box {
         }
     }
     @Override
-    public void action2(Game userGame, NewGameBuilder newGameBuilder, List<Integer> listOfRewards) {
+    public void actionSimulation(Game userGame, NewGameBuilder newGameBuilder, BigInteger balance) {
 
-        if (userGame.getChosenBox().isGameOver() && userGame.getChances() == 0) {
+        if (gameOver && userGame.getChances() == 0) {
             userGame.setAdditionalChanceOrReward(randomAdditionalReward(userGame.isUsedSecondChance()));
 
             if (userGame.getAdditionalChanceOrReward() == 1) {
@@ -58,12 +62,12 @@ public class GameoverBox extends Box {
                 userGame.setUsedSecondChance(true);
             } else {
                 userGame.setReward(userGame.getAdditionalChanceOrReward() + userGame.getReward());
-                listOfRewards.add(userGame.getReward());
+                balance+= (userGame.getReward());
                 userGame.setEndRound(true);
 
             }
 
-        } else if (userGame.getChosenBox().isGameOver() && userGame.getChances() == 1) {
+        } else if (gameOver && userGame.getChances() == 1) {
             userGame.setChances(0);
 
         }

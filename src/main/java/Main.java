@@ -1,6 +1,3 @@
-import model.Box;
-import service.NewGameBuilder;
-
 import java.util.*;
 
 
@@ -32,31 +29,7 @@ public class Main {
                         break;
                     }
                     case 2: {
-                        int sum = 0;
-                        int avarageReward;
-                        List<Integer> boxesFromSimulation = new ArrayList<>
-                                (gameBuilderSimulator.simulationGames(properties));
-
-                        System.out.println(boxesFromSimulation);
-
-
-                        for (int i = 0; i < boxesFromSimulation.size(); i++) {
-                            sum += boxesFromSimulation.get(i);
-                        }
-                        avarageReward = sum / Integer.parseInt(properties.getProperty("NUMBER_OF_SIMULATIONS"));
-
-
-                        System.out.println(properties.getProperty("TEXT_SUM_REWARDS")
-                                + Integer.parseInt(properties.getProperty("NUMBER_OF_SIMULATIONS"))
-                                + properties.getProperty("TEXT_SUM_REWARDS2")
-                                + sum
-                                + properties.getProperty("CURRENCY"));
-
-                        System.out.println(properties.getProperty("TEXT_AVERAGE_WINS")
-                                + Integer.parseInt(properties.getProperty("NUMBER_OF_SIMULATIONS"))
-                                + properties.getProperty("TEXT_AVERAGE_WINS2")
-                                + avarageReward
-                                + properties.getProperty("CURRENCY"));
+                        newSimulation(gameBuilderSimulator, properties);
                         break;
                     }
                     case 3: {
@@ -74,5 +47,31 @@ public class Main {
         } while (game);
     }
 
+    private static void newSimulation(GameBuilderSimulator gameBuilderSimulator, Properties properties){
+        int sum = 0;
+        int averageReward;
+        List<Integer> boxesFromSimulation = (gameBuilderSimulator.simulationGames(properties));
+
+        System.out.println(boxesFromSimulation);
+
+
+        for (int i = 0; i < boxesFromSimulation.size(); i++) {
+            sum += boxesFromSimulation.get(i);
+        }
+        averageReward = sum / Integer.parseInt(properties.getProperty("NUMBER_OF_SIMULATIONS"));
+
+
+        System.out.println(properties.getProperty("TEXT_SUM_REWARDS")
+                + Integer.parseInt(properties.getProperty("NUMBER_OF_SIMULATIONS"))
+                + properties.getProperty("TEXT_SUM_REWARDS2")
+                + sum
+                + properties.getProperty("CURRENCY"));
+
+        System.out.println(properties.getProperty("TEXT_AVERAGE_WINS")
+                + Integer.parseInt(properties.getProperty("NUMBER_OF_SIMULATIONS"))
+                + properties.getProperty("TEXT_AVERAGE_WINS2")
+                + averageReward
+                + properties.getProperty("CURRENCY"));
+    }
 
 }

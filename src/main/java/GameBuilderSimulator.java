@@ -2,6 +2,7 @@ import model.Box;
 import model.Game;
 import service.NewGameBuilder;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -14,7 +15,8 @@ public class GameBuilderSimulator {
 
         System.out.println("Ładowanie symulacji...");
 
-        List<Integer> wyniki = new ArrayList<>();
+     //   List<Integer> wyniki = new ArrayList<>();
+        BigInteger balance = 0;
         for (int i = 0; i < Integer.parseInt(properties.getProperty("NUMBER_OF_SIMULATIONS")); i++) {
             NewGameBuilder newGameBuilder = new NewGameBuilder();
             List<Box> list = newGameBuilder.createBoxes2(properties);
@@ -28,13 +30,13 @@ public class GameBuilderSimulator {
                 List<Box> boxesNotInUse = new ArrayList<>(getBoxesNotInUse(userGame.getCreatedBoxes()));
                 simulationChosingBox(boxesNotInUse, userGame);
 
-                userGame.getChosenBox().action2(userGame, newGameBuilder, wyniki);
+                userGame.getChosenBox().actionSimulation(userGame, newGameBuilder, balance);
 
 
             } while (!userGame.isEndRound());
 
         }
-        return wyniki;
+        return balance;
     }
 
     public static void simulationChosingBox(List<Box> boxesNotInUse, Game game) {
@@ -44,7 +46,6 @@ public class GameBuilderSimulator {
         boxesNotInUse.get(game.getSimulationNumber()).setChosen(true);
     }
 
-    //Tworzy liste pozostałych skrzynek na której działa symulacja
     private static List<Box> getBoxesNotInUse(List<Box> boxes) {
         List<Box> boxesNotInUse = new ArrayList<Box>();
         for (Box box : boxes) {

@@ -16,7 +16,6 @@ public class UserGame {
         BoxOperations boxOperations = new BoxOperations();
 
         List<Box> boxes = newGameBuilder.createBoxes2(properties);
-        System.out.println(newGameBuilder.toString(boxes));
 
         Game userGame = new Game
                 (0, 0, 0,
@@ -26,7 +25,7 @@ public class UserGame {
             System.out.println();
             System.out.println(properties.getProperty("TEXT_SELECT_NUMBER"));
             boxOperations.showBoxesNotInUse(userGame.getCreatedBoxes());
-            boxOperations.chosingBox(properties, userGame).action(userGame, properties, additionalReward);
+            boxOperations.chosingBox(properties, userGame).actionUserGame(userGame, properties, additionalReward);
         } while (!userGame.isEndRound());
     }
 }

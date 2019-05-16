@@ -2,7 +2,7 @@ package service;
 
 import model.Box;
 import model.ChanceBox;
-import model.GameoverBox;
+import model.GameOverBox;
 import model.RewardBox;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class NewGameBuilder  {
             yourCreatedBoxes.add(new RewardBox("5", 5));
         }
         for (int i = 0; i < Integer.parseInt(properties.getProperty("NUMBER_OF_GAME_OVER_BOXES")); i++) {
-            yourCreatedBoxes.add(new GameoverBox("Game Over", true));
+            yourCreatedBoxes.add(new GameOverBox("Game Over", true));
         }
         for (int i = 0; i < Integer.parseInt(properties.getProperty("NUMBER_OF_CHANCE_BOXES")); i++) {
             yourCreatedBoxes.add(new ChanceBox("Chance", true));
@@ -41,16 +41,5 @@ public class NewGameBuilder  {
 
     public void resetChosenBoxes(List<Box> boxes) {
         boxes.forEach(box->box.setChosen(false));
-    }
-
-
-    public String toString(List<Box> createdBoxes) {
-
-        int cardNumber = 1;
-        String makingBoxesLog = null;
-        for (Box i : createdBoxes) {
-            makingBoxesLog += ("\nPudełko nr." + (cardNumber++) + " : " + i.getName());
-        }
-        return("Pomieszane pudełka: " + makingBoxesLog);
     }
 }
