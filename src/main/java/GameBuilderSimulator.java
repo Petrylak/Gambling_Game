@@ -9,14 +9,15 @@ import java.util.Properties;
 import java.util.Random;
 
 public class GameBuilderSimulator {
+    long balance = 0;
 
-    public List<Integer> simulationGames(Properties properties) {
+    public long simulationGames(Properties properties) {
 
 
         System.out.println("Ładowanie symulacji...");
 
      //   List<Integer> wyniki = new ArrayList<>();
-        BigInteger balance = 0;
+
         for (int i = 0; i < Integer.parseInt(properties.getProperty("NUMBER_OF_SIMULATIONS")); i++) {
             NewGameBuilder newGameBuilder = new NewGameBuilder();
             List<Box> list = newGameBuilder.createBoxes2(properties);
@@ -30,12 +31,13 @@ public class GameBuilderSimulator {
                 List<Box> boxesNotInUse = new ArrayList<>(getBoxesNotInUse(userGame.getCreatedBoxes()));
                 simulationChosingBox(boxesNotInUse, userGame);
 
-                userGame.getChosenBox().actionSimulation(userGame, newGameBuilder, balance);
+                userGame.getChosenBox().actionSimulation(userGame, newGameBuilder);
 
-
+                balance =+ userGame.getReward();
             } while (!userGame.isEndRound());
 
         }
+
         return balance;
     }
 

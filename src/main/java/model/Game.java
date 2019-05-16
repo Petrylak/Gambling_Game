@@ -13,6 +13,7 @@ public class Game {
     private int additionalChanceOrReward;
     private int userNumber;
     private int simulationNumber;
+    private int balance;
     private boolean usedSecondChance;
     private boolean endRound;
     private Box chosenBox;

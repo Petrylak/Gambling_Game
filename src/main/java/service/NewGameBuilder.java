@@ -28,10 +28,10 @@ public class NewGameBuilder  {
             yourCreatedBoxes.add(new RewardBox("5", 5));
         }
         for (int i = 0; i < Integer.parseInt(properties.getProperty("NUMBER_OF_GAME_OVER_BOXES")); i++) {
-            yourCreatedBoxes.add(new GameOverBox("Game Over", true));
+            yourCreatedBoxes.add(new GameOverBox("Game Over"));
         }
         for (int i = 0; i < Integer.parseInt(properties.getProperty("NUMBER_OF_CHANCE_BOXES")); i++) {
-            yourCreatedBoxes.add(new ChanceBox("Chance", true));
+            yourCreatedBoxes.add(new ChanceBox("Chance"));
         }
 
         Collections.shuffle(yourCreatedBoxes);

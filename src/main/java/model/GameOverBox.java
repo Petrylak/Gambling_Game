@@ -11,11 +11,8 @@ import java.util.Properties;
 
 public class GameOverBox extends Box {
 
-    private boolean gameOver;
-
-    public GameOverBox(String name, boolean gameOver) {
+    public GameOverBox(String name) {
         super(name);
-        this.gameOver = gameOver;
     }
 
     @Override
@@ -52,9 +49,9 @@ public class GameOverBox extends Box {
         }
     }
     @Override
-    public void actionSimulation(Game userGame, NewGameBuilder newGameBuilder, BigInteger balance) {
+    public void actionSimulation(Game userGame, NewGameBuilder newGameBuilder) {
 
-        if (gameOver && userGame.getChances() == 0) {
+        if (userGame.getChances() == 0) {
             userGame.setAdditionalChanceOrReward(randomAdditionalReward(userGame.isUsedSecondChance()));
 
             if (userGame.getAdditionalChanceOrReward() == 1) {
@@ -62,12 +59,12 @@ public class GameOverBox extends Box {
                 userGame.setUsedSecondChance(true);
             } else {
                 userGame.setReward(userGame.getAdditionalChanceOrReward() + userGame.getReward());
-                balance+= (userGame.getReward());
+            //    userGame.setBalance(userGame.getBalance() + userGame.getReward());
                 userGame.setEndRound(true);
 
             }
 
-        } else if (gameOver && userGame.getChances() == 1) {
+        } else if (userGame.getChances() == 1) {
             userGame.setChances(0);
 
         }

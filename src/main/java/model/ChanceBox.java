@@ -9,11 +9,8 @@ import java.util.Properties;
 
 public class ChanceBox extends Box {
 
-    private boolean chance;
-
-    public ChanceBox(String name, boolean chance) {
+    public ChanceBox(String name) {
         super(name);
-        this.chance = chance;
 
     }
 
@@ -22,12 +19,15 @@ public class ChanceBox extends Box {
     public void actionUserGame(Game game, Properties properties, AdditionalRewardCode additionalRewardCode){
         System.out.println();
         System.out.println(properties.getProperty("TEXT_CONGRATULATIONS_BOXCHANCE"));
-        game.setChances(1);
-        game.getChosenBox().setChosen(true);
+        setProperties(game);
     }
 
     @Override
-    public void actionSimulation(Game game, NewGameBuilder newGameBuilder, BigInteger balance){
+    public void actionSimulation(Game game, NewGameBuilder newGameBuilder){
+        setProperties(game);
+    }
+
+    private void setProperties(Game game){
         game.setChances(1);
         game.getChosenBox().setChosen(true);
     }

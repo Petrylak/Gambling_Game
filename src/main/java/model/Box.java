@@ -22,5 +22,5 @@ public abstract class Box {
 
     abstract public void actionUserGame(Game game, Properties properties, AdditionalRewardCode additionalRewardCode);
 
-    abstract public void actionSimulation(Game game, NewGameBuilder newGameBuilder, BigInteger balance);
+    abstract public void actionSimulation(Game game, NewGameBuilder newGameBuilder);
 }
