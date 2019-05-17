@@ -2,10 +2,9 @@ package model;
 
 import lombok.Getter;
 import lombok.Setter;
-import service.NewGameBuilder;
 import support.AdditionalRewardCode;
+import support.NewGameBuilder;
 
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Properties;
 
@@ -20,7 +19,7 @@ public abstract class Box {
     }
 
 
-    abstract public void actionUserGame(Game game, Properties properties, AdditionalRewardCode additionalRewardCode);
+    abstract public void actionUserGame(Game game, Properties properties, AdditionalRewardCode additionalReward);
 
     abstract public void actionSimulation(Game game, NewGameBuilder newGameBuilder, List<Long> balance);
 }

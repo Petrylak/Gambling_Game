@@ -17,7 +17,7 @@ public class BoxOperations {
                     isChosen(userGame, properties);
                 }
 
-                wasntChosen(userGame, properties);
+                isNotChosen(userGame, properties);
                 error = false;
                 return userGame.getChosenBox();
             } catch (IndexOutOfBoundsException exception) {
@@ -44,7 +44,7 @@ public class BoxOperations {
         } while (game.getCreatedBoxes().get(game.getUserNumber()).isChosen());
     }
 
-    private static void wasntChosen(Game game, Properties properties) {
+    private static void isNotChosen(Game game, Properties properties) {
         System.out.println();
         System.out.println(properties.getProperty("TEXT_GAME_CHOSEN_BOX"));
         System.out.println(game.getCreatedBoxes().get(game.getUserNumber()).getName());

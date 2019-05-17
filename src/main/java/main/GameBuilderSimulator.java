@@ -1,15 +1,15 @@
+package main;
+
 import model.Box;
 import model.Game;
-import service.NewGameBuilder;
+import support.NewGameBuilder;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
 public class GameBuilderSimulator {
-    long balance = 0;
 
     public List<Long> simulationGames(Properties properties) {
 
@@ -20,7 +20,7 @@ public class GameBuilderSimulator {
 
         for (int i = 0; i < Integer.parseInt(properties.getProperty("NUMBER_OF_SIMULATIONS")); i++) {
             NewGameBuilder newGameBuilder = new NewGameBuilder();
-            List<Box> list = newGameBuilder.createBoxes2(properties);
+            List<Box> list = newGameBuilder.createBoxes(properties);
             Game userGame = new Game
 
                     (0, 0, 0,

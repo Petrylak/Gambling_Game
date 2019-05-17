@@ -1,11 +1,8 @@
 package model;
 
-import service.NewGameBuilder;
-import support.AdditionalReward;
 import support.AdditionalRewardCode;
+import support.NewGameBuilder;
 
-import java.math.BigInteger;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -27,7 +24,8 @@ public class GameOverBox extends Box {
             if (game.getAdditionalChanceOrReward() == 1) {
                 game.setAdditionalChanceOrReward(0);
                 game.setUsedSecondChance(true);
-                Collections.shuffle(game.getCreatedBoxes());
+                NewGameBuilder newGameBuilder = new NewGameBuilder();
+                game.setCreatedBoxes(newGameBuilder.createBoxes(properties));
             } else {
                 game.setReward(game.getReward() + game.getAdditionalChanceOrReward());
                 game.setAdditionalChanceOrReward(0);
@@ -48,6 +46,7 @@ public class GameOverBox extends Box {
             System.out.println();
         }
     }
+
     @Override
     public void actionSimulation(Game userGame, NewGameBuilder newGameBuilder, List<Long> balance) {
 
@@ -60,7 +59,6 @@ public class GameOverBox extends Box {
             } else {
                 userGame.setReward(userGame.getAdditionalChanceOrReward() + userGame.getReward());
                 balance.add(userGame.getReward());
-            //    userGame.setBalance(userGame.getBalance() + userGame.getReward());
                 userGame.setEndRound(true);
 
             }
@@ -76,10 +74,10 @@ public class GameOverBox extends Box {
     private static int randomAdditionalReward(boolean isUsedSecondChance) {
         AdditionalReward additionalReward;
 
-        if (isUsedSecondChance) {//bez chance
+        if (isUsedSecondChance) {
             additionalReward = AdditionalReward.randomRewardWithoutChance();
             return additionalReward.getReward();
-        } else {//wszystkie z chance
+        } else {
             additionalReward = AdditionalReward.randomReward();
             if ((additionalReward == AdditionalReward.SMALL) ||
                     (additionalReward == AdditionalReward.MEDIUM) ||

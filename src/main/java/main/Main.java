@@ -1,4 +1,12 @@
-import java.util.*;
+package main;
+
+import main.GameBuilderSimulator;
+import support.IOProperties;
+
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Properties;
+import java.util.Scanner;
 
 
 public class Main {
@@ -47,9 +55,9 @@ public class Main {
         } while (game);
     }
 
-    private static void newSimulation(GameBuilderSimulator gameBuilderSimulator, Properties properties){
+    private static void newSimulation(GameBuilderSimulator gameBuilderSimulator, Properties properties) {
         List<Long> balance = gameBuilderSimulator.simulationGames(properties);
-        long sum=0;
+        long sum = 0;
         for (int i = 0; i < balance.size(); i++) {
             sum += balance.get(i);
         }

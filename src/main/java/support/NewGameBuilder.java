@@ -1,4 +1,4 @@
-package service;
+package support;
 
 import model.Box;
 import model.ChanceBox;
@@ -12,7 +12,7 @@ import java.util.Properties;
 
 public class NewGameBuilder  {
 
-    public List<Box> createBoxes2(Properties properties) {
+    public List<Box> createBoxes(Properties properties) {
 
 
         List<Box> yourCreatedBoxes = new ArrayList<>();

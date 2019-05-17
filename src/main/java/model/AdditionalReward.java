@@ -1,4 +1,4 @@
-package support;
+package model;
 
 import java.util.Arrays;
 import java.util.Collections;

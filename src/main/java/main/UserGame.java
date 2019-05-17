@@ -1,8 +1,10 @@
+package main;
+
 import model.Box;
 import model.Game;
-import service.NewGameBuilder;
 import support.AdditionalRewardCode;
 import support.BoxOperations;
+import support.NewGameBuilder;
 
 import java.util.List;
 import java.util.Properties;
@@ -15,7 +17,7 @@ public class UserGame {
         AdditionalRewardCode additionalReward = new AdditionalRewardCode();
         BoxOperations boxOperations = new BoxOperations();
 
-        List<Box> boxes = newGameBuilder.createBoxes2(properties);
+        List<Box> boxes = newGameBuilder.createBoxes(properties);
 
         Game userGame = new Game
                 (0, 0, 0,
