@@ -1,0 +1,14 @@
+support\NewGameBuilder.class
+tests\NewGameBuilderTest.class
+support\AdditionalRewardCode.class
+support\IOProperties.class
+main\Main.class
+model\RewardBox.class
+model\ChanceBox.class
+main\UserGame.class
+model\Box.class
+model\Game.class
+model\GameOverBox.class
+main\GameBuilderSimulator.class
+support\BoxOperations.class
+model\AdditionalReward.class
